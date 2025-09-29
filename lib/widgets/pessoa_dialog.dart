@@ -1,3 +1,4 @@
+import 'package:desenvolvimento_flutter_iniciante/extensions/extensions.dart';
 import 'package:desenvolvimento_flutter_iniciante/models/pessoa.dart';
 import 'package:desenvolvimento_flutter_iniciante/widgets/default_dialog_container.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class PessoaDialog extends StatelessWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: Text("Fechar"),
         ),
