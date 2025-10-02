@@ -4,10 +4,12 @@ import 'package:desenvolvimento_flutter_iniciante/widgets/default_dialog_contain
 import 'package:flutter/material.dart';
 
 class PessoaDialog extends StatelessWidget {
+  final void Function(Pessoa pessoa) onDelete;
   final Pessoa pessoa;
   const PessoaDialog({
     super.key,
     required this.pessoa,
+    required this.onDelete,
   });
 
   @override
@@ -29,16 +31,28 @@ class PessoaDialog extends StatelessWidget {
             DefaultDialogContainer(child: Text("Nome: ${pessoa.nome}")),
             DefaultDialogContainer(child: Text("Peso: ${pessoa.peso.toStringAsFixed(1)} kg")),
             DefaultDialogContainer(child: Text("Altura: ${pessoa.altura} cm")),
-            SizedBox(height: 24),
           ],
         )
       ),
       actions: [
-        ElevatedButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text("Fechar"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                onDelete(pessoa);
+                context.pop();
+              },
+              child: Text("Excluir", style: TextStyle(color: Colors.red),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: Text("Fechar"),
+            ),
+          ],
         ),
       ],
     );
