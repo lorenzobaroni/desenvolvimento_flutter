@@ -1,8 +1,9 @@
+import 'package:desenvolvimento_flutter_iniciante/controllers/pessoa_controller.dart';
 import 'package:desenvolvimento_flutter_iniciante/models/criar_pessoa_dto.dart';
-import 'package:desenvolvimento_flutter_iniciante/models/pessoa.dart';
 import 'package:desenvolvimento_flutter_iniciante/routes/routes.dart';
 import 'package:desenvolvimento_flutter_iniciante/widgets/listview_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +13,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Pessoa> pessoas = [];
+  final pessoaController = GetIt.instance<PessoaController>();
+
+  @override
+  void initState() {
+    pessoaController.addListener(() {
+      setState(() {
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,20 +31,15 @@ class _HomePageState extends State<HomePage> {
         title: Text("Meu primeiro App."),
         ),
         body: ListaPessoas(
-          pessoas: pessoas,
-          onDelete: (pessoa) {
-            setState(() {
-              pessoas.remove(pessoa);
-            }); 
-          },),
+          pessoas: pessoaController.pessoas,
+          ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             final result = await Navigator.of(context).pushNamed(Routes.criarPessoaPage);
             if(result != null) {
               final pessoaDto = result as CriarPessoaDto;
-              final pessoa = Pessoa(id: pessoas.length + 1, nome: pessoaDto.nome, peso: pessoaDto.peso, altura: pessoaDto.altura);
               setState(() {
-                pessoas.add(pessoa);
+                pessoaController.adicionarPessoa(pessoaDto);
               });
             }
 
