@@ -1,6 +1,8 @@
+import 'package:desenvolvimento_flutter_iniciante/controllers/pessoa_controller.dart';
 import 'package:desenvolvimento_flutter_iniciante/models/criar_pessoa_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 class CriarPessoaPage
     extends StatefulWidget {
@@ -16,6 +18,7 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
   final pesoController = TextEditingController();
   final alturaController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final pessoaController = GetIt.instance<PessoaController>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +99,8 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
                         peso: double.parse(pesoController.text.replaceAll(',', '.')),
                         altura: int.parse(alturaController.text),
                       );
-                      Navigator.of(context).pop(criarPessoa);
+                      pessoaController.adicionarPessoa(criarPessoa);
+                      Navigator.of(context).pop();
                     }
                   },
                   child: Text("Salvar")),
