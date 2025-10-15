@@ -41,7 +41,6 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
                   return null;
                 },
                 controller: nomeController,
-                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: "Nome",               
                   border: OutlineInputBorder(),
@@ -61,7 +60,6 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
                   return null;
                 },
                 controller: pesoController,
-                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: "Peso",               
                   border: OutlineInputBorder(),
@@ -82,7 +80,6 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
                   return null;
                 },
                 controller: alturaController,
-                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: "Altura",               
                   border: OutlineInputBorder(),

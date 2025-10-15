@@ -19,10 +19,30 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pessoaController.addListener(() {
-      setState(() {
-      });
-    });
+    themeController.themeNotifier.addListener(_onThemeMensagem);
+    pessoaController.mensagemNotifier.addListener(_onPessoaMensagem);
+  }
+
+  void _onPessoaMensagem() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green,
+        content: Text(pessoaController.mensagemNotifier.value),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _onThemeMensagem() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: themeController.isLightTheme ? Colors.blue : Colors.white,
+        content: Text(themeController.themeNotifier.value),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
@@ -62,5 +82,12 @@ class _HomePageState extends State<HomePage> {
           child: Icon(Icons.navigate_next),
         ),
         );
+  }
+
+  @override
+  void dispose() {
+    pessoaController.mensagemNotifier.removeListener(_onPessoaMensagem);
+    themeController.themeNotifier.removeListener(_onThemeMensagem);
+    super.dispose();
   }
 }

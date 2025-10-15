@@ -8,11 +8,14 @@ class ThemeController extends ChangeNotifier {
 
   ThemeController({required this.sharedPreferences});
 
+  ValueNotifier<String> themeNotifier = ValueNotifier('');
+
   ThemeData get currentTheme => isLightTheme ? lightTheme : darkTheme;
 
   void toggleTheme() async {
     isLightTheme = !isLightTheme;
     await sharedPreferences.setBool('isLightTheme', isLightTheme);
+    themeNotifier.value = 'Tema alterado para ${isLightTheme ? "Claro" : "Escuro"}';
     notifyListeners();
   }
 

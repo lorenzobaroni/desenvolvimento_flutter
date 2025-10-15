@@ -14,7 +14,7 @@ class DefaultDialogContainer extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 2),
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 81, 142, 248),
+                color: const Color.fromARGB(255, 28, 71, 146),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: child,

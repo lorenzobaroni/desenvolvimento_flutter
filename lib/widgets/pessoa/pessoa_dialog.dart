@@ -22,9 +22,9 @@ class PessoaDialog extends StatelessWidget {
           children: [
             Text("Detalhes da pessoa",
                   style: TextStyle(
-                  color: Colors.black, // 🔹 Cor do texto
-                  fontSize: 16,      // (opcional) tamanho do texto
-                  fontWeight: FontWeight.bold, // (opcional) peso da fonte
+                  color: Colors.black, 
+                  fontSize: 16,      
+                  fontWeight: FontWeight.bold, 
               ),
             ),
             SizedBox(height: 16),
