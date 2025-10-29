@@ -34,20 +34,24 @@ class CustomTile extends StatelessWidget {
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  leading,
-                  gap,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      title,
-                      gap,
-                      subTitle,
-                    ],
-                  ),
-                ],
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    leading,
+                    gap,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          title,
+                          gap,
+                          subTitle,
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               trailing,
             ],

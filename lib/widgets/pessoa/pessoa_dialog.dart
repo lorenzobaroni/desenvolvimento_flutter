@@ -1,6 +1,7 @@
 import 'package:desenvolvimento_flutter_iniciante/controllers/pessoa_controller.dart';
 import 'package:desenvolvimento_flutter_iniciante/extensions/extensions.dart';
 import 'package:desenvolvimento_flutter_iniciante/models/pessoa.dart';
+import 'package:desenvolvimento_flutter_iniciante/routes/routes.dart';
 import 'package:desenvolvimento_flutter_iniciante/widgets/core/default_dialog_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -40,11 +41,23 @@ class PessoaDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ElevatedButton(
-              onPressed: () {
-                pessoaController.removerPessoa(pessoa);
-                context.pop();
+              onPressed: () async {
+                await pessoaController.removerPessoa(pessoa);
+                if(context.mounted) context.pop();
               },
               child: Text("Excluir", style: TextStyle(color: Colors.red),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).pushNamed(
+                Routes.criarPessoaPage,
+                arguments: { 'pessoa': pessoa }
+                );
+              //  await pessoaController.removerPessoa(pessoa);
+              //  if(context.mounted) context.pop();
+              },
+              child: Text("Editar", style: TextStyle(color: Colors.yellow),
               ),
             ),
             ElevatedButton(

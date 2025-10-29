@@ -1,12 +1,14 @@
 import 'package:desenvolvimento_flutter_iniciante/controllers/pessoa_controller.dart';
 import 'package:desenvolvimento_flutter_iniciante/models/criar_pessoa_dto.dart';
+import 'package:desenvolvimento_flutter_iniciante/models/pessoa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 class CriarPessoaPage
     extends StatefulWidget {
-  const CriarPessoaPage({super.key});
+  final Pessoa? pessoa;
+  const CriarPessoaPage({super.key, required this.pessoa});
 
   @override
   State<CriarPessoaPage> createState() => _CriarPessoaPageState();
@@ -19,12 +21,24 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
   final alturaController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final pessoaController = GetIt.instance<PessoaController>();
+  bool isEditMode = false;
+
+  @override
+  void initState() {
+    if (widget.pessoa != null) {
+      isEditMode = true;
+      nomeController.text = widget.pessoa!.nome;
+      pesoController.text = widget.pessoa!.peso.toStringAsFixed(1).replaceAll('.', ',');
+      alturaController.text = widget.pessoa!.altura.toString();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nova Página"),
+        title: Text("Formulário"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -89,15 +103,24 @@ class _CriarPessoaPageState extends State<CriarPessoaPage> {
               gap,
               Row(
                 children: [
-                  Expanded(child: ElevatedButton(onPressed: () {
+                  Expanded(child: ElevatedButton(onPressed: () async {
                     if(formKey.currentState?.validate() == true) {
-                      final criarPessoa = CriarPessoaDto(
+                      if (!isEditMode) {
+                        final criarPessoa = CriarPessoaDto(
                         nome: nomeController.text,
                         peso: double.parse(pesoController.text.replaceAll(',', '.')),
                         altura: int.parse(alturaController.text),
                       );
-                      pessoaController.adicionarPessoa(criarPessoa);
-                      Navigator.of(context).pop();
+                      await pessoaController.adicionarPessoa(criarPessoa);
+                      } else {
+                        final pessoaAtualizada = widget.pessoa!.copyWith(
+                          nome: nomeController.text,
+                          peso: double.parse(pesoController.text.replaceAll(',', '.')),
+                          altura: int.parse(alturaController.text),
+                        );
+                      await pessoaController.atualizarPessoa(pessoaAtualizada);
+                      }
+                      if(context.mounted) Navigator.of(context).pop();
                     }
                   },
                   child: Text("Salvar")),

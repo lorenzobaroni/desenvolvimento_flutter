@@ -6,7 +6,7 @@ List<Pessoa> gerarPessoas(int quantidade) {
   List<Pessoa> pessoas = [];
   for (int i = 0; i < quantidade; i++) {
     pessoas.add(Pessoa(
-      id: i,
+      id: i.toString(),
       nome: faker.person.name(),
       peso: faker.randomGenerator.decimal(min: 50, scale: 100),
       altura: faker.randomGenerator.integer(200, min: 150),

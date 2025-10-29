@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    pessoaController.listarPessoas();
     themeController.themeNotifier.addListener(_onThemeMensagem);
     pessoaController.mensagemNotifier.addListener(_onPessoaMensagem);
   }
@@ -69,6 +70,11 @@ class _HomePageState extends State<HomePage> {
         body: ListenableBuilder(
           listenable: pessoaController,
           builder: (context, child) {
+            if (pessoaController.loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return ListaPessoas(
               pessoas: pessoaController.pessoas,
               );
@@ -79,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             Navigator.of(context).pushNamed(Routes.criarPessoaPage);
             
           },
-          child: Icon(Icons.navigate_next),
+          child: Icon(Icons.add),
         ),
         );
   }
